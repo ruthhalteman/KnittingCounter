@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(current+"_row", rows);
+                editor.putInt(current + "_row", rows);
                 editor.apply();
             }
         });
@@ -77,34 +77,62 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.add) {
-            editDialog();
+            editDialog(true);
             return true;
         }
 
         if (id == R.id.edit) {
-            editDialog();
+            editDialog(false);
+            return true;
+        }
+
+        if (id == R.id.switchProject) {
+            switchProjectDialog();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void editDialog() {
+    public void editDialog(final boolean isNew) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit your counter");
         LayoutInflater inflater = this.getLayoutInflater();
         final View v = inflater.inflate(R.layout.edit_dialog, null);
         builder.setView(v);
+        EditText newName = (EditText) v.findViewById(R.id.newName);
+        newName.setText(name);
 
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                if (isNew) {
+                    current = current++;
+                }
                 EditText newName = (EditText) v.findViewById(R.id.newName);
                 name = newName.getText().toString();
                 updateScreen();
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(current+"_name", name);
+                editor.putString(current + "_name", name);
                 editor.apply();
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void switchProjectDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick a counter");
+
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
             }
         });
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

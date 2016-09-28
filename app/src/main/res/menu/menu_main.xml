@@ -5,6 +5,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/reset" android:title="Reset"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/switchProject" android:title="Switch counters"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/add" android:title="Add counter"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

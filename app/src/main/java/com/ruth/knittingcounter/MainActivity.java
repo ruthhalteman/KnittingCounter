@@ -20,22 +20,25 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         rows = sharedPref.getInt("row", 1);
-        TextView rowDisplay = (TextView) findViewById(R.id.rows);
-        rowDisplay.setText(""+rows);
+        updateNumber();
 
         Button incrementButton = (Button) findViewById(R.id.plus);
         incrementButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rows = rows+1;
-                TextView rowDisplay = (TextView) findViewById(R.id.rows);
-                rowDisplay.setText(""+rows);
+                updateNumber();
 
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("row", rows);
-                editor.commit();
+                editor.apply();
             }
         });
+    }
+
+    public void updateNumber() {
+        TextView rowDisplay = (TextView) findViewById(R.id.rows);
+        rowDisplay.setText(""+rows);
     }
 
     @Override
@@ -53,7 +56,13 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.reset) {
+            rows = 1;
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("row", rows);
+            editor.apply();
+            updateNumber();
             return true;
         }
 

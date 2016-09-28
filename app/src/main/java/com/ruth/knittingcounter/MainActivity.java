@@ -1,5 +1,7 @@
 package com.ruth.knittingcounter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +17,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rows = 1;
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        rows = sharedPref.getInt("row", 1);
+        TextView rowDisplay = (TextView) findViewById(R.id.rows);
+        rowDisplay.setText(""+rows);
 
         Button incrementButton = (Button) findViewById(R.id.plus);
         incrementButton.setOnClickListener(new View.OnClickListener() {
@@ -23,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
                 rows = rows+1;
                 TextView rowDisplay = (TextView) findViewById(R.id.rows);
                 rowDisplay.setText(""+rows);
+
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("row", rows);
+                editor.commit();
             }
         });
     }

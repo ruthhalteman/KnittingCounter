@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button incrementButton = (Button) findViewById(R.id.plus);
         incrementButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                rows = rows+1;
+                rows++;
                 updateNumber();
 
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("row", rows);
             editor.apply();
             updateNumber();
+            return true;
+        }
+
+        if (id == R.id.add) {
             return true;
         }
 

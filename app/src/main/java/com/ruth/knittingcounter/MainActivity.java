@@ -100,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         final View v = inflater.inflate(R.layout.edit_dialog, null);
         builder.setView(v);
-        EditText newName = (EditText) v.findViewById(R.id.newName);
-        newName.setText(name);
+        if (!isNew) {
+            EditText newName = (EditText) v.findViewById(R.id.newName);
+            newName.setText(name);
+        }
 
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
